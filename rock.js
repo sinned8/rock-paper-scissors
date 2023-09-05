@@ -39,4 +39,48 @@ function computerPlay(){
  }
  
  
+ function game(){
+   let i;
+   let userScore = 0;
+   let computerScore = 0;
+   for(i=0; i<5; i++){
+     
+      let playerSelection = prompt("Choose Rock, Paper, or Scissors.");
+      let result = playRound(playerSelection, computerPlay());
+     
+      if(result.indexOf("win") !== -1){
+       userScore++;
+       console.log(`The user won Round ${i+1}.`);
+     }
+     else if(result.indexOf("lose") !== -1){
+       computerScore++;
+       console.log(`The CPU won Round ${i+1}.`);
+     }
+     else if(result.indexOf("tie") !== -1){
+       console.log(`Round ${i+1} was a tie.`);
+     }
+     else{
+       console.error("Incorrect input.");
+       alert("Incorrect input(s).Please try either Rock Paper or Scissors.");
+       i--; 
+     }
+   }
+   
+   
+   
+   let ties = 5-userScore-computerScore;
+   let grammar = (ties != 1) ? "games" : "game";
+   
+   if(userScore>computerScore){
+     console.log(`The user wins ${userScore} to ${computerScore}, with ${ties} tied ${grammar}!`);
+   }
+   else if(computerScore>userScore){
+     console.log(`The computer wins ${computerScore} to ${userScore}, with ${ties} tied ${grammar}!`);
+   }
+   else{
+     console.log(`It's a tie! Both players had a score of ${userScore}, with ${ties} tied ${grammar}!`);
+   }
+ }
  
+ 
+ game();

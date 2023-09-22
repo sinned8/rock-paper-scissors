@@ -1,94 +1,110 @@
 
+//Global vars
+let playerScore = 0;
+let computerScore = 0;
+const roundClass = document.querySelector('.roundClass');
+const scoreMsg = document.querySelector('.score');
+const choices = document.querySelectorAll('.choice')
 
-let computerSelection = computerPlay();
+//Calling start functions
+startGame();
+updateScore();
 
+
+//Function for the CPU play. Chooses a 'random' from three given values 
+// and returns the CPU choice
 function computerPlay(){
-  let randomNumber = Math.round(Math.random() * 2)
-  const list = ["rock", "paper", "scissors"];
-  randomChoice = list[randomNumber];
-  return randomChoice;
+  let choice = Math.floor(Math.random() * (3) + 1);
+  if (choice === 1) {
+      return "rock";
+  } else if (choice === 2) {
+      return "paper";
+  } else {
+      return "scissors";
+  }
  }
 
 
- let playerSelection = '';
- 
-   console.log(computerSelection);
-
-   document.querySelector('#rock').addEventListener('click', event =>{
-    playerSelection = 'rock'
-    result();
-    console.log(playerSelection,result());
-   })
-   
-   document.querySelector('#paper').addEventListener('click', event =>{
-    playerSelection = 'paper'
-    result();
-    console.log(playerSelection,result());
-   })
-
-   document.querySelector('#scissors').addEventListener('click', event =>{
-    playerSelection = 'scissors'
-    result();
-    console.log(playerSelection,result());
-   })
-
-
-const resultClass = document.querySelector('.resultClass');
-   function result() {
+// Function to play a round using player & computer selection as input vars
+  function round(playerSelection,computerSelection) {
     
     if (playerSelection  === computerSelection) {
-      
-      resultClass.textContent = `You chose ${playerSelection} and the CPU chose ${computerSelection}, thus its a tie!`;
+      roundClass.textContent = `You chose ${playerSelection} and the CPU chose ${computerSelection}, thus its a tie!`;
     } 
     else if (playerSelection  === 'rock' && computerSelection === 'paper'){
-     
-      resultClass.textContent = `You chose ${playerSelection} and the CPU chose ${computerSelection}, thus CPU wins!`;    
+      computerScore++;
+      roundClass.textContent = `You chose ${playerSelection} and the CPU chose ${computerSelection}, thus CPU wins!`; 
+      updateScore(); 
     } 
     else if (playerSelection  === 'paper' && computerSelection === 'scissors'){
-      
-      resultClass.textContent = `You chose ${playerSelection} and the CPU chose ${computerSelection}, thus CPU wins!`;     
+      computerScore++;
+      roundClass.textContent = `You chose ${playerSelection} and the CPU chose ${computerSelection}, thus CPU wins!`;    
+      updateScore();
     } 
     else if (playerSelection  === 'scissors' && computerSelection === 'rock'){
-      
-      resultClass.textContent = `You chose ${playerSelection} and the CPU chose ${computerSelection}, thus CPU wins!`;     
+      computerScore++;
+      roundClass.textContent = `You chose ${playerSelection} and the CPU chose ${computerSelection}, thus CPU wins!`; 
+      updateScore();
     } 
     else{
-      
-      resultClass.textContent = `You chose ${playerSelection} and the CPU chose ${computerSelection}, thus you win!`;     
-    }  
+      playerScore++;
+      roundClass.textContent = `You chose ${playerSelection} and the CPU chose ${computerSelection}, thus you win!`;  
+      updateScore();
+    } 
+  }
+
+  //Function to update score 
+  function updateScore(){
+    if (playerScore == 5){
+      scoreMsg.textContent = 'Player wins!';
+      endGame();
+    }
+    else if (computerScore == 5){
+      scoreMsg.textContent = 'CPU wins!';
+      endGame();
+    }
+    else {
+      scoreMsg.textContent = `Player score: ${playerScore}  CPU score: ${computerScore}`;
+    }
+  }
+
+  // Function takes what text content from bttn press is as input
+  //for player selection and assings the var compselection to run  computerPlay
+  // which returns either rock paper or scissors
+  //then runs the round function w both inputs
+  function getSelection(playerSelection){
+    let computerSelection = computerPlay();
+    round(playerSelection,computerSelection);
   }
 
 
-
-//  function playRound(playerSelection, computerSelection){
-   
-//    switch(playerSelection.toLowerCase()){
-//      case("rock"):
-//        return (computerSelection.toLowerCase() == "scissors") ? "You win! Rock beats Scissors!"
-//              :(computerSelection.toLowerCase() == "paper") ? "You lose! Paper beats Rock!" 
-//              : "It's a tie!";
-//        break; 
-     
-//        case("paper"):
-//        return (computerSelection.toLowerCase() == "rock") ? "You win! Paper beats Rock!"
-//              :(computerSelection.toLowerCase() == "scissors") ? "You lose! Scissors beats Paper!" 
-//              : "It's a tie!";
-//        break;
-     
-//        case("scissors"):
-//        return (computerSelection.toLowerCase() == "paper") ? "You win! Scissors beats paper!"
-//              :(computerSelection.toLowerCase() == "rock") ? "You lose! Rock beats scissors!" 
-//              : "It's a tie!";
-//        break;
-     
-//        default:
-//        return "Something went wrong.";
-//    }
-//  }
- 
+  //Starts game
+  function startGame(){
+        playerScore = 0;
+        computerScore = 0;
+        choices.forEach(choice => {
+          choice.disabled = false;
+      });
+      roundClass.textContent = '';
+      scoreMsg.textContent = `Player score: ${playerScore}  CPU score: ${computerScore}`;
 
 
-// let result = playRound(playerSelection, computerPlay());
+  }
+
+  //Ends game by disabling bttns
+  function endGame(){
+        choices.forEach(choice => {
+          choice.disabled = true;
+      });
+
+  }
+
+  //Have getSelection func run on bttn click 
+  choices.forEach(choice => {
+    choice.addEventListener('click', () => {
+        getSelection(choice.textContent);
+    })
+  });
 
 
 
@@ -129,21 +145,21 @@ const resultClass = document.querySelector('.resultClass');
 //    let computerScore = 0;
     
 //    let playerSelection = '';
-//    let result = playRound(playerSelection, computerPlay());
+//    let round = playRound(playerSelection, computerPlay());
    
 //    document.querySelector('#rock').onclick = function(){
 //     playerSelection = 'rock';
-//     result;
+//     round;
 //     console.log('rock');
 //    }
 //    document.querySelector('#paper').onclick = function(){
 //     playerSelection = 'paper';
-//     result;
+//     round;
 //     console.log('paper');
 //    }
 //    document.querySelector('#scissors').onclick = function(){
 //     playerSelection = 'scissors';
-//     result;
+//     round;
 //     console.log('scissors');
 //    }
    
@@ -154,17 +170,17 @@ const resultClass = document.querySelector('.resultClass');
     
    
    
-  //  if(result.indexOf("win") !== -1){
+  //  if(round.indexOf("win") !== -1){
   //   userScore++;
   //   console.log(`The user won Round ${i+1}.`);
   // }
 
-  // else if(result.indexOf("lose") !== -1){ 
+  // else if(round.indexOf("lose") !== -1){ 
   //   computerScore++;  
   //   console.log(`The CPU won Round ${i+1}.`);
   // }
     
-  // else if(result.indexOf("tie") !== -1){ 
+  // else if(round.indexOf("tie") !== -1){ 
   //   console.log(`Round ${i+1} was a tie.`);
   // } 
   

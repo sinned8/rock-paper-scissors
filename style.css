@@ -1,0 +1,34 @@
+.mainContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+.header{
+    color: red;
+}
+.bttnContainer{
+    padding: 10px;
+    margin: 10px;
+}
+.choice{
+    margin: 6px;
+    border-radius: 8px;
+    padding: 10px;
+}
+.roundDisplay{
+    margin: 20px;
+    
+}
+.score{
+    margin-top: 10px;
+}
+.footer{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    color: rgb(12, 12, 12);
+    text-align: center;
+}

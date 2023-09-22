@@ -27,7 +27,7 @@ function computerPlay(){
 
 // Function to play a round using player & computer selection as input vars
   function round(playerSelection,computerSelection) {
-    
+    playerSelection = playerSelection.toLowerCase()
     if (playerSelection  === computerSelection) {
       roundClass.textContent = `You chose ${playerSelection} and the CPU chose ${computerSelection}, thus its a tie!`;
     } 
